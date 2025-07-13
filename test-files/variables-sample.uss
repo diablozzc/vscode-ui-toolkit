@@ -1,0 +1,49 @@
+/* USS file with CSS custom properties (variables) */
+
+/* Define custom properties at root level */
+:root {
+  --primary-color: #007ACC;
+  --secondary-color: #FFF;
+  --base-padding: 10px;
+  --border-radius: 4px;
+  --primary: var(--blue-600);
+  --blue-600: #2563eb;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --font-size-base: 14px;
+}
+
+/* Use variables in component styles */
+.button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: var(--base-padding);
+  border-radius: var(--border-radius);
+  margin: var(--spacing-md);
+  font-size: var(--font-size-base);
+}
+
+.button-primary {
+  background-color: var(--primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.container {
+  padding: var(--base-padding);
+  background-color: var(--secondary-color);
+}
+
+/* Variables can reference other variables */
+.card {
+  --card-padding: calc(var(--base-padding) * 2);
+  --card-bg: var(--secondary-color);
+  
+  padding: var(--card-padding);
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+}
+
+/* Undefined variable - should show warning */
+.error-example {
+  color: var(--undefined-variable);
+}

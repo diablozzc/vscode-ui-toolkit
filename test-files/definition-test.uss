@@ -1,0 +1,89 @@
+/* USS Variable Definition Test File */
+
+/* Variable definitions - these should be jump targets */
+:root {
+  /* Primary color variables */
+  --primary-color: #007ACC;
+  --primary-hover: #005a9e;
+  --primary-active: #004578;
+  
+  /* Secondary color variables */
+  --secondary-color: #FFF;
+  --secondary-hover: #f5f5f5;
+  
+  /* Size variables */
+  --base-padding: 10px;
+  --border-radius: 4px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  
+  /* Complex variable reference */
+  --primary: var(--blue-600);  /* This should jump to --blue-600 definition */
+  --blue-600: #2563eb;
+  
+  /* Spacing system */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+/* Usage examples - var() calls should jump to definitions above */
+.button {
+  /* These var() calls should be clickable and jump to definitions */
+  background-color: var(--primary-color);   /* Should jump to line 6 */
+  color: var(--secondary-color);            /* Should jump to line 11 */
+  padding: var(--base-padding);             /* Should jump to line 15 */
+  border-radius: var(--border-radius);     /* Should jump to line 16 */
+  font-size: var(--font-size-md);          /* Should jump to line 18 */
+}
+
+.button:hover {
+  background-color: var(--primary-hover);  /* Should jump to line 7 */
+  color: var(--secondary-hover);           /* Should jump to line 12 */
+}
+
+.button:active {
+  background-color: var(--primary-active); /* Should jump to line 8 */
+}
+
+.button-large {
+  font-size: var(--font-size-lg);          /* Should jump to line 19 */
+  padding: var(--spacing-lg);              /* Should jump to line 29 */
+}
+
+.container {
+  padding: var(--spacing-md);              /* Should jump to line 28 */
+  margin: var(--spacing-sm) var(--spacing-md); /* Should jump to both definitions */
+}
+
+/* Nested variable usage */
+.card {
+  --card-padding: calc(var(--base-padding) * 2); /* var() should jump to line 15 */
+  --card-border: var(--border-radius);           /* Should jump to line 16 */
+  
+  padding: var(--card-padding);            /* Should jump to line 58 (local definition) */
+  border-radius: var(--card-border);       /* Should jump to line 59 (local definition) */
+}
+
+/* Complex usage patterns */
+.complex-example {
+  /* Multiple variables in one declaration */
+  padding: var(--spacing-sm) var(--spacing-md) var(--spacing-lg) var(--spacing-xl);
+  
+  /* Variables in calc() expressions */
+  width: calc(100% - var(--spacing-lg) * 2);
+  
+  /* Variables as fallbacks */
+  background-color: var(--primary, #007ACC);
+  
+  /* Chained variable references */
+  color: var(--primary);                   /* Should jump to line 21, which references --blue-600 */
+}
+
+/* Error case - undefined variable (should show warning) */
+.error-example {
+  color: var(--undefined-variable);        /* Should show error/warning */
+}

@@ -1,0 +1,23 @@
+/* Test file for compound selector validation */
+
+ScrollView .unity-scroller__low-button:hover,
+ScrollView .unity-scroller__high-button:hover {
+    background-color: rgba(96, 96, 96, 0.9);
+    border-color: #ffffff;
+}
+
+.simple-class {
+    color: red;
+}
+
+Button:hover {
+    background-color: blue;
+}
+
+.parent .child {
+    margin: 10px;
+}
+
+#some-id > .another-class {
+    padding: 5px;
+}

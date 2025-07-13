@@ -1,0 +1,61 @@
+/* Components file - uses variables from variables-base.uss */
+
+/* Button component using cross-file variable references */
+.btn {
+  background-color: var(--brand-primary);    /* Should jump to variables-base.uss line 4 */
+  color: var(--brand-secondary);             /* Should jump to variables-base.uss line 5 */
+  padding: var(--space-3) var(--space-4);    /* Should jump to variables-base.uss lines 18-19 */
+  border-radius: var(--radius-md);           /* Should jump to variables-base.uss line 32 */
+  font-size: var(--font-base);               /* Should jump to variables-base.uss line 26 */
+}
+
+.btn-accent {
+  background-color: var(--brand-accent);     /* Should jump to variables-base.uss line 6 */
+}
+
+.btn-large {
+  padding: var(--space-5) var(--space-6);    /* Should jump to variables-base.uss lines 20-21 */
+  font-size: var(--font-lg);                 /* Should jump to variables-base.uss line 27 */
+  border-radius: var(--radius-lg);           /* Should jump to variables-base.uss line 33 */
+}
+
+/* Card component */
+.card {
+  background-color: var(--gray-100);         /* Should jump to variables-base.uss line 9 */
+  border: 1px solid var(--gray-300);         /* Should jump to variables-base.uss line 11 */
+  border-radius: var(--radius-lg);           /* Should jump to variables-base.uss line 33 */
+  padding: var(--space-6);                   /* Should jump to variables-base.uss line 21 */
+}
+
+.card-header {
+  color: var(--gray-900);                    /* Should jump to variables-base.uss line 14 */
+  font-size: var(--font-xl);                 /* Should jump to variables-base.uss line 28 */
+  margin-bottom: var(--space-4);             /* Should jump to variables-base.uss line 19 */
+}
+
+.card-body {
+  color: var(--gray-700);                    /* Should jump to variables-base.uss line 13 */
+  font-size: var(--font-base);               /* Should jump to variables-base.uss line 26 */
+  line-height: 1.5;
+}
+
+/* Input component */
+.input {
+  border: 1px solid var(--gray-300);         /* Should jump to variables-base.uss line 11 */
+  border-radius: var(--radius-sm);           /* Should jump to variables-base.uss line 31 */
+  padding: var(--space-2) var(--space-3);    /* Should jump to variables-base.uss lines 17-18 */
+  font-size: var(--font-base);               /* Should jump to variables-base.uss line 26 */
+}
+
+.input:focus {
+  border-color: var(--brand-primary);        /* Should jump to variables-base.uss line 4 */
+}
+
+/* Local variables that override or extend base variables */
+.special-component {
+  --local-primary: var(--brand-primary);     /* Should jump to variables-base.uss line 4 */
+  --local-spacing: calc(var(--space-4) * 1.5); /* Should jump to variables-base.uss line 19 */
+  
+  background-color: var(--local-primary);    /* Should jump to line 47 (local definition) */
+  padding: var(--local-spacing);             /* Should jump to line 48 (local definition) */
+}

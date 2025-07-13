@@ -1,0 +1,239 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "UXML",
+  "scopeName": "text.xml.uxml",
+  "patterns": [
+    {
+      "include": "#xml-processing-instruction"
+    },
+    {
+      "include": "#xml-declaration"
+    },
+    {
+      "include": "#xml-comment"
+    },
+    {
+      "include": "#xml-cdata"
+    },
+    {
+      "include": "#xml-tag"
+    },
+    {
+      "include": "#xml-entity"
+    }
+  ],
+  "repository": {
+    "xml-processing-instruction": {
+      "name": "meta.tag.preprocessor.xml.uxml",
+      "begin": "(<\\?)\\s*([-_a-zA-Z0-9]+)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.xml.uxml"
+        },
+        "2": {
+          "name": "entity.name.tag.xml.uxml"
+        }
+      },
+      "end": "(\\?>)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.xml.uxml"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#xml-attribute"
+        }
+      ]
+    },
+    "xml-declaration": {
+      "name": "meta.tag.sgml.xml.uxml",
+      "begin": "(<!)([A-Z]+)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.xml.uxml"
+        },
+        "2": {
+          "name": "keyword.other.xml.uxml"
+        }
+      },
+      "end": "(>)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.xml.uxml"
+        }
+      }
+    },
+    "xml-comment": {
+      "name": "comment.block.xml.uxml",
+      "begin": "<!--",
+      "end": "-->",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.xml.uxml"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.comment.xml.uxml"
+        }
+      }
+    },
+    "xml-cdata": {
+      "name": "string.unquoted.cdata.xml.uxml",
+      "begin": "<!\\[CDATA\\[",
+      "end": "\\]\\]>",
+      "beginCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.begin.xml.uxml"
+        }
+      },
+      "endCaptures": {
+        "0": {
+          "name": "punctuation.definition.string.end.xml.uxml"
+        }
+      }
+    },
+    "xml-tag": {
+      "patterns": [
+        {
+          "include": "#xml-tag-open"
+        },
+        {
+          "include": "#xml-tag-close"
+        },
+        {
+          "include": "#xml-tag-self-closing"
+        }
+      ]
+    },
+    "xml-tag-open": {
+      "name": "meta.tag.xml.uxml",
+      "begin": "(<)([a-zA-Z_][\\w.-]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.xml.uxml"
+        },
+        "2": {
+          "patterns": [
+            {
+              "name": "entity.name.tag.unity.uxml",
+              "match": "\\b(BindableElement|VisualElement|BoundsField|BoundsIntField|Box|Button|ColorField|CurveField|DoubleField|DropdownField|EnumField|EnumFlagsField|FloatField|Foldout|GradientField|GroupBox|Hash128Field|HelpBox|IMGUIContainer|Image|InspectorElement|IntegerField|Label|LayerField|LayerMaskField|ListView|LongField|Mask64Field|MaskField|MinMaxSlider|MultiColumnListView|MultiColumnTreeView|ObjectField|PopupWindow|ProgressBar|PropertyField|RadioButton|RadioButtonGroup|RectField|RectIntField|RenderingLayerMaskField|RepeatButton|ScrollView|Scroller|Slider|SliderInt|Tab|TabView|TagField|TemplateContainer|TextElement|TextField|Toggle|ToggleButtonGroup|Toolbar|ToolbarBreadcrumbs|ToolbarButton|ToolbarMenu|ToolbarPopupSearchField|ToolbarSearchField|ToolbarSpacer|ToolbarToggle|TreeView|TwoPaneSplitView|UnsignedIntegerField|UnsignedLongField|Vector2Field|Vector2IntField|Vector3Field|Vector3IntField|Vector4Field|Template|Instance|Columns|Column)\\b"
+            },
+            {
+              "name": "entity.name.tag.xml.uxml",
+              "match": "[a-zA-Z_][\\w.-]*"
+            }
+          ]
+        }
+      },
+      "end": "(>)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.end.xml.uxml"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#xml-attribute"
+        }
+      ]
+    },
+    "xml-tag-close": {
+      "name": "meta.tag.xml.uxml",
+      "begin": "(</)([a-zA-Z_][\\w.-]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.xml.uxml"
+        },
+        "2": {
+          "name": "entity.name.tag.xml.uxml"
+        }
+      },
+      "end": "(>)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.end.xml.uxml"
+        }
+      }
+    },
+    "xml-tag-self-closing": {
+      "name": "meta.tag.xml.uxml",
+      "begin": "(<)([a-zA-Z_][\\w.-]*)",
+      "beginCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.begin.xml.uxml"
+        },
+        "2": {
+          "name": "entity.name.tag.xml.uxml"
+        }
+      },
+      "end": "(/>)",
+      "endCaptures": {
+        "1": {
+          "name": "punctuation.definition.tag.end.xml.uxml"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#xml-attribute"
+        }
+      ]
+    },
+    "xml-attribute": {
+      "patterns": [
+        {
+          "name": "meta.attribute-with-value.xml.uxml",
+          "begin": "([a-zA-Z_][\\w.-]*)\\s*(=)\\s*([\"'])",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.other.attribute-name.xml.uxml"
+            },
+            "2": {
+              "name": "punctuation.separator.key-value.xml.uxml"
+            },
+            "3": {
+              "name": "punctuation.definition.string.begin.xml.uxml"
+            }
+          },
+          "end": "\\3",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.string.end.xml.uxml"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#xml-entity"
+            },
+            {
+              "name": "string.quoted.xml.uxml",
+              "match": "[^<&\"']+"
+            }
+          ]
+        },
+        {
+          "name": "meta.attribute.xml.uxml",
+          "match": "([a-zA-Z_][\\w.-]*)",
+          "captures": {
+            "1": {
+              "name": "entity.other.attribute-name.xml.uxml"
+            }
+          }
+        }
+      ]
+    },
+    "xml-entity": {
+      "name": "constant.character.entity.xml.uxml",
+      "match": "(&)([a-zA-Z_][\\w.-]*|#[0-9]+|#x[0-9a-fA-F]+)(;)",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.entity.xml.uxml"
+        },
+        "3": {
+          "name": "punctuation.definition.entity.xml.uxml"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,159 @@
+/* Unity UI Toolkit Sample Styles */
+
+.main-container {
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100%;
+}
+
+.title-label {
+    font-size: 24px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    color: #333333;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+.input-field {
+    margin: 5px 0;
+    padding: 8px;
+    border-width: 1px;
+    border-color: #cccccc;
+    border-radius: 3px;
+    background-color: #ffffff;
+}
+
+.submit-button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: #ffffff;
+    border-radius: 5px;
+    border-width: 0;
+    -unity-font-style: bold;
+}
+
+.submit-button:hover {
+    background-color: #005a9e;
+}
+
+.setting-toggle {
+    margin: 5px 0;
+    color: #333333;
+}
+
+.volume-slider {
+    margin: 10px 0;
+    flex-grow: 1;
+}
+
+.dropdown-field {
+    margin: 5px 0;
+    background-color: #ffffff;
+    border-width: 1px;
+    border-color: #cccccc;
+    border-radius: 3px;
+}
+
+.content-scroll {
+    flex-grow: 1;
+    margin: 20px 0;
+    background-color: #ffffff;
+    border-width: 1px;
+    border-color: #cccccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.item-list {
+    flex-grow: 1;
+    min-height: 200px;
+}
+
+.footer-box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+/* Unity-specific styling examples */
+.unity-button {
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-background-image-tint-color: #007acc;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    -unity-slice-type: stretch;
+    -unity-slice-left: 10;
+    -unity-slice-right: 10;
+    -unity-slice-top: 10;
+    -unity-slice-bottom: 10;
+}
+
+.unity-text {
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: #000000;
+    -unity-paragraph-spacing: 5px;
+    -unity-text-generator: advanced;
+    -unity-text-overflow-position: end;
+    -unity-overflow-clip-box: content-box;
+}
+
+/* Additional CSS properties testing */
+.advanced-styling {
+    /* Transform properties */
+    rotate: 45deg;
+    scale: 1.2 1.2;
+    translate: 10px 20px;
+    transform-origin: center center;
+
+    /* Transition properties */
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.1s;
+    transition-duration: 0.5s;
+    transition-property: opacity;
+    transition-timing-function: ease-out;
+
+    /* Background properties */
+    background-position: center center;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /* Text properties */
+    letter-spacing: 2px;
+    word-spacing: 4px;
+    text-overflow: ellipsis;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+    /* Cursor */
+    cursor: pointer;
+
+    /* Opacity */
+    opacity: 0.8;
+}
+
+/* Responsive design examples */
+@media (max-width: 600px) {
+    .main-container {
+        padding: 10px;
+    }
+    
+    .title-label {
+        font-size: 18px;
+    }
+}

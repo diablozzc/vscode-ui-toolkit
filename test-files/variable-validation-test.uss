@@ -1,0 +1,29 @@
+/* Test file for CSS variable validation */
+
+:root {
+  --main-color: #007ACC;
+  --spacing: 10px;
+}
+
+.test-class {
+  /* Valid property with variable - should not show error */
+  color: var(--main-color);
+  
+  /* Invalid property with variable - should show error */
+  invalid-property: var(--main-color);
+  
+  /* Valid property with valid value - should not show error */
+  display: flex;
+  
+  /* Invalid property with valid value - should show error */
+  invalid-property-2: flex;
+  
+  /* Valid property with invalid value - should show warning */
+  display: invalid-value;
+  
+  /* Invalid property with invalid value - should show error for property */
+  another-invalid-prop: invalid-value;
+  
+  /* Using undefined variable - should show warning */
+  color: var(--undefined-variable);
+}

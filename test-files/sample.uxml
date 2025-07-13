@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement class="main-container">
+        <ui:Label text="Unity UI Toolkit Sample" class="title-label" />
+        
+        <ui:GroupBox text="User Input">
+            <ui:TextField placeholder-text="Enter your name" class="input-field" name="nameField" />
+            <ui:Button text="Submit" class="submit-button" name="submitButton" />
+        </ui:GroupBox>
+        
+        <ui:GroupBox text="Settings">
+            <ui:Toggle text="Enable notifications" class="setting-toggle" />
+            <ui:Slider low-value="0" high-value="100" value="50" class="volume-slider" />
+            <ui:DropdownField choices="Option 1,Option 2,Option 3" class="dropdown-field" />
+        </ui:GroupBox>
+        
+        <ui:ScrollView class="content-scroll">
+            <ui:ListView class="item-list" />
+        </ui:ScrollView>
+        
+        <ui:Box class="footer-box">
+            <ui:ProgressBar value="75" title="Loading..." class="progress-bar" />
+        </ui:Box>
+    </ui:VisualElement>
+</ui:UXML>
