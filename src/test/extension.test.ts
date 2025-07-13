@@ -16,7 +16,7 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
       const mockDocument = {
         getText: () =>
           '<ui:Button class="submit-button primary-btn" text="Click me" />',
-        lineAt: (line: number) => ({
+        lineAt: (_line: number) => ({
           text: '<ui:Button class="submit-button primary-btn" text="Click me" />',
         }),
         positionAt: (offset: number) => new vscode.Position(0, offset),
@@ -31,7 +31,7 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
 
     test('Should detect position in class attribute', () => {
       const mockDocument = {
-        lineAt: (line: number) => ({
+        lineAt: (_line: number) => ({
           text: '<ui:Button class="submit-button" />',
         }),
       } as any;
@@ -48,7 +48,7 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
     test('Should parse Unity elements correctly', () => {
       const mockDocument = {
         getText: () => '<ui:Button /><ui:Label /><ui:CustomElement />',
-        lineAt: (line: number) => ({
+        lineAt: (_line: number) => ({
           text: '<ui:Button /><ui:Label /><ui:CustomElement />',
         }),
         positionAt: (offset: number) => new vscode.Position(0, offset),
@@ -66,7 +66,7 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
     test('Should parse CSS rules correctly', () => {
       const mockDocument = {
         getText: () => '.button { color: red; background-color: blue; }',
-        lineAt: (line: number) => ({
+        lineAt: (_line: number) => ({
           text: '.button { color: red; background-color: blue; }',
         }),
         positionAt: (offset: number) => new vscode.Position(0, offset),
@@ -85,7 +85,7 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
     test('Should parse class selectors correctly', () => {
       const mockDocument = {
         getText: () => '.button, .primary-button { color: red; }',
-        lineAt: (line: number) => ({
+        lineAt: (_line: number) => ({
           text: '.button, .primary-button { color: red; }',
         }),
         positionAt: (offset: number) => new vscode.Position(0, offset),
@@ -101,7 +101,7 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
     test('Should validate USS syntax', () => {
       const mockDocument = {
         getText: () => '.button { color: red; } .unclosed { color: blue;',
-        lineAt: (line: number) => ({
+        lineAt: (_line: number) => ({
           text: '.button { color: red; } .unclosed { color: blue;',
         }),
         positionAt: (offset: number) => new vscode.Position(0, offset),
@@ -147,8 +147,8 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
     test('Should handle empty documents gracefully', () => {
       const emptyDocument = {
         getText: () => '',
-        lineAt: (line: number) => ({ text: '' }),
-        positionAt: (offset: number) => new vscode.Position(0, 0),
+        lineAt: (_line: number) => ({ text: '' }),
+        positionAt: (_offset: number) => new vscode.Position(0, 0),
         uri: vscode.Uri.file('/empty.uss'),
       } as any;
 
@@ -162,7 +162,7 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
     test('Should handle malformed documents gracefully', () => {
       const malformedDocument = {
         getText: () => '<ui:Button class="incomplete',
-        lineAt: (line: number) => ({ text: '<ui:Button class="incomplete' }),
+        lineAt: (_line: number) => ({ text: '<ui:Button class="incomplete' }),
         positionAt: (offset: number) => new vscode.Position(0, offset),
         uri: vscode.Uri.file('/malformed.uxml'),
       } as any;

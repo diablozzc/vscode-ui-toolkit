@@ -3,7 +3,17 @@
   "displayName": "Unity UI Toolkit",
   "description": "Unity UI Toolkit support for VSCode with UXML and USS syntax highlighting, validation, and intelligent linking",
   "version": "0.1.1",
-  "publisher": "unity-ui-toolkit",
+  "publisher": "diablozzc",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diablozzc/vscode-ui-toolkit.git"
+  },
+  "homepage": "https://github.com/diablozzc/vscode-ui-toolkit",
+  "bugs": {
+    "url": "https://github.com/diablozzc/vscode-ui-toolkit/issues"
+  },
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.74.0"
   },

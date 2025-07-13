@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import { UXMLParser } from '../parsers/uxmlParser';
 import { USSParser } from '../parsers/ussParser';
 

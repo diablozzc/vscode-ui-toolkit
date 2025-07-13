@@ -1,0 +1,66 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Unity-inspired gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#222C37"/>
+      <stop offset="100%" style="stop-color:#1A1A1A"/>
+    </linearGradient>
+    
+    <!-- Accent gradient for UI elements -->
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00D4FF"/>
+      <stop offset="100%" style="stop-color:#0099CC"/>
+    </linearGradient>
+    
+    <!-- Secondary accent -->
+    <linearGradient id="secondary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35"/>
+      <stop offset="100%" style="stop-color:#CC5529"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" rx="16" fill="url(#bg)"/>
+  
+  <!-- Main UI container representing UXML -->
+  <rect x="20" y="20" width="88" height="88" rx="8" fill="none" stroke="url(#accent)" stroke-width="2" opacity="0.8"/>
+  
+  <!-- Header bar -->
+  <rect x="24" y="24" width="80" height="12" rx="2" fill="url(#accent)" opacity="0.6"/>
+  
+  <!-- CSS/USS styling elements -->
+  <g opacity="0.9">
+    <!-- Left panel (USS styles) -->
+    <rect x="28" y="44" width="24" height="4" rx="1" fill="url(#secondary)"/>
+    <rect x="28" y="52" width="18" height="3" rx="1" fill="url(#secondary)" opacity="0.7"/>
+    <rect x="28" y="59" width="22" height="3" rx="1" fill="url(#secondary)" opacity="0.7"/>
+    <rect x="28" y="66" width="16" height="3" rx="1" fill="url(#secondary)" opacity="0.7"/>
+    
+    <!-- Right panel (UXML elements) -->
+    <rect x="60" y="44" width="40" height="8" rx="2" fill="url(#accent)" opacity="0.3"/>
+    <rect x="64" y="56" width="32" height="6" rx="2" fill="url(#accent)" opacity="0.3"/>
+    <rect x="68" y="66" width="24" height="6" rx="2" fill="url(#accent)" opacity="0.3"/>
+    
+    <!-- Nested elements -->
+    <rect x="72" y="76" width="16" height="4" rx="1" fill="url(#accent)" opacity="0.5"/>
+    <rect x="76" y="84" width="12" height="3" rx="1" fill="url(#accent)" opacity="0.4"/>
+  </g>
+  
+  <!-- Connection lines showing relationship between USS and UXML -->
+  <g stroke="url(#secondary)" stroke-width="1" opacity="0.6" fill="none">
+    <path d="M52 48 Q56 48 60 48" stroke-dasharray="2,2"/>
+    <path d="M50 59 Q55 59 64 59" stroke-dasharray="2,2"/>
+    <path d="M44 69 Q54 69 68 69" stroke-dasharray="2,2"/>
+  </g>
+  
+  <!-- Unity-inspired logo mark -->
+  <g transform="translate(90,14)">
+    <circle cx="8" cy="8" r="6" fill="url(#accent)" opacity="0.8"/>
+    <rect x="5" y="5" width="6" height="6" fill="white" opacity="0.9"/>
+    <rect x="6.5" y="6.5" width="3" height="3" fill="url(#bg)"/>
+  </g>
+  
+  <!-- File type indicators -->
+  <text x="28" y="100" font-family="monospace" font-size="8" fill="url(#secondary)" font-weight="bold">USS</text>
+  <text x="80" y="100" font-family="monospace" font-size="8" fill="url(#accent)" font-weight="bold">UXML</text>
+</svg>

@@ -1,4 +1,4 @@
-import * as path from 'path';
+import * as _path from 'path';
 
 export async function run(): Promise<void> {
   // For now, just return a resolved promise

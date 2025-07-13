@@ -62,8 +62,8 @@ export class USSDefinitionProvider implements vscode.DefinitionProvider {
    * Search for variable definition in related USS files
    */
   private searchInRelatedFiles(
-    document: vscode.TextDocument,
-    variableName: string
+    _document: vscode.TextDocument,
+    _variableName: string
   ): vscode.Location | null {
     
     // For now, only search in the current document

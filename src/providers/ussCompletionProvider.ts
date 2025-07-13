@@ -108,7 +108,7 @@ export class USSCompletionProvider implements vscode.CompletionItemProvider {
     return completions;
   }
 
-  private getPropertyValueCompletions(propertyName: string, document: vscode.TextDocument, position: vscode.Position): vscode.CompletionItem[] {
+  private getPropertyValueCompletions(propertyName: string, document: vscode.TextDocument, _position: vscode.Position): vscode.CompletionItem[] {
     const completions: vscode.CompletionItem[] = [];
     
     // Add variable completions for any property value
