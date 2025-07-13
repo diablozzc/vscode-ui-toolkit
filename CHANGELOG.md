@@ -5,6 +5,55 @@ All notable changes to the Unity UI Toolkit extension will be documented in this
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-07-13
+
+### Added
+- **@import Navigation Support**: Complete support for @import statements in USS files
+  - **Path Jumping**: Use `Ctrl+Click` to jump from @import paths directly to target files
+  - **Multiple Formats**: Support for double quotes, single quotes, url() and other import formats
+    - `@import "variables.uss";`
+    - `@import 'components.uss';`
+    - `@import url("theme.uss");`
+    - `@import url('base.uss');`
+  - **Smart Path Resolution**: Automatic handling of relative paths, absolute paths, and extension-less paths
+  - **Cross-file Import Chain**: Navigate through complex import dependencies
+
+- **CSS Variables (Custom Properties) System**: Complete CSS custom properties support
+  - **Variable Definition**: Full support for CSS custom properties (`--variable-name: value;`)
+  - **Variable Usage**: Smart completion and validation for `var()` function calls
+  - **Cross-file Variables**: Find variable definitions across different USS files in workspace
+  - **Go to Definition**: Jump from `var(--variable-name)` usage to variable definition
+  - **Variable Validation**: Warn about undefined variable references
+  - **Intelligent Completion**: Auto-complete available variables in `var()` functions
+
+### Enhanced
+- **Enhanced Definition Provider**: Extended `USSDefinitionProvider` and `USSCrossFileDefinitionProvider`
+  - Support for both CSS variables and @import navigation in the same provider
+  - Improved accuracy for position detection within different syntax elements
+  - Better error handling for invalid paths and missing files
+
+- **Advanced USS Parser**: Extended `USSParser` with new parsing capabilities
+  - `parseImports()`: Parse all @import statements with position information
+  - `getImportAtPosition()`: Detect if cursor is within an import path
+  - `resolveImportPath()`: Intelligent path resolution with workspace context
+  - Enhanced custom property parsing with cross-file support
+
+### Technical Improvements
+- **Comprehensive Test Coverage**: Added extensive test suite for new features
+  - @import statement parsing tests
+  - Path resolution tests
+  - CSS variable parsing and validation tests
+  - Position detection tests for both imports and variables
+- **Type Safety**: Enhanced TypeScript interfaces for better type checking
+  - `USSImport` interface for import statement representation
+  - Enhanced `USSCustomProperty` interface for variable tracking
+- **Performance Optimizations**: Efficient parsing and workspace file scanning
+
+### Bug Fixes
+- Fixed edge cases in position detection for complex CSS syntax
+- Improved error handling for malformed @import statements
+- Enhanced workspace folder detection for cross-file operations
+
 ## [0.1.1] - 2025-01-12
 
 ### Enhanced
@@ -92,7 +141,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Future Enhancements
 - UXML template support and validation
-- USS @import statement support
+- ✅ ~~USS @import statement support~~ (Completed in v0.2.0)
 - Advanced refactoring tools
 - Integration with Unity Editor
 - Performance optimizations for large projects
+- Enhanced CSS variable intellisense with value previews
+- Support for CSS @media queries in USS files

@@ -9,6 +9,12 @@ export class USSDefinitionProvider implements vscode.DefinitionProvider {
     _token: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.Definition | vscode.LocationLink[]> {
     
+    // Check if position is inside an @import statement
+    const importItem = USSParser.getImportAtPosition(document, position);
+    if (importItem) {
+      return this.findImportDefinition(document, importItem);
+    }
+    
     const line = document.lineAt(position.line).text;
     const wordRange = document.getWordRangeAtPosition(position, /--[a-z0-9-]+/);
     
@@ -70,6 +76,23 @@ export class USSDefinitionProvider implements vscode.DefinitionProvider {
     // Cross-file search will be handled by the enhanced provider
     return null;
   }
+
+  /**
+   * Find the target file of an @import statement
+   */
+  private findImportDefinition(
+    document: vscode.TextDocument,
+    importItem: import('../parsers/ussParser').USSImport
+  ): vscode.Location | null {
+    
+    const targetUri = USSParser.resolveImportPath(document.uri, importItem.path);
+    if (!targetUri) {
+      return null;
+    }
+    
+    // Return location pointing to the beginning of the target file
+    return new vscode.Location(targetUri, new vscode.Position(0, 0));
+  }
 }
 
 /**
@@ -82,6 +105,21 @@ export class USSCrossFileDefinitionProvider implements vscode.DefinitionProvider
     position: vscode.Position,
     _token: vscode.CancellationToken
   ): Promise<vscode.Definition | vscode.LocationLink[]> {
+    
+    // Check if position is inside an @import statement
+    const importItem = USSParser.getImportAtPosition(document, position);
+    if (importItem) {
+      const targetUri = USSParser.resolveImportPath(document.uri, importItem.path);
+      if (targetUri) {
+        return [{
+          originSelectionRange: importItem.pathRange,
+          targetUri: targetUri,
+          targetRange: new vscode.Range(0, 0, 0, 0),
+          targetSelectionRange: new vscode.Range(0, 0, 0, 0)
+        }];
+      }
+      return [];
+    }
     
     const line = document.lineAt(position.line).text;
     const wordRange = document.getWordRangeAtPosition(position, /--[a-z0-9-]+/);

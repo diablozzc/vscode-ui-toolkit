@@ -113,6 +113,68 @@ suite('Unity UI Toolkit Extension Test Suite', function () {
       assert.ok(diagnostics.length > 0);
       assert.ok(diagnostics.some((d) => d.message.includes('Unclosed brace')));
     });
+
+    test('Should parse @import statements correctly', () => {
+      const mockDocument = {
+        getText: () => `@import "variables.uss";
+@import 'components.uss';
+@import url("theme.uss");
+@import url('base.uss');
+.button { color: red; }`,
+        lineAt: (line: number) => {
+          const lines = [
+            '@import "variables.uss";',
+            '@import \'components.uss\';',
+            '@import url("theme.uss");',
+            '@import url(\'base.uss\');',
+            '.button { color: red; }'
+          ];
+          return { text: lines[line] || '' };
+        },
+        positionAt: (offset: number) => new vscode.Position(0, offset),
+        uri: vscode.Uri.file('/test.uss'),
+      } as any;
+
+      const imports = USSParser.parseImports(mockDocument);
+
+      assert.strictEqual(imports.length, 4);
+      assert.strictEqual(imports[0].path, 'variables.uss');
+      assert.strictEqual(imports[1].path, 'components.uss');
+      assert.strictEqual(imports[2].path, 'theme.uss');
+      assert.strictEqual(imports[3].path, 'base.uss');
+    });
+
+    test('Should find import at position', () => {
+      const mockDocument = {
+        getText: () => '@import "variables.uss";',
+        lineAt: (_line: number) => ({
+          text: '@import "variables.uss";',
+        }),
+        positionAt: (offset: number) => new vscode.Position(0, offset),
+        uri: vscode.Uri.file('/test.uss'),
+      } as any;
+
+      // Position inside the import path
+      const position = new vscode.Position(0, 12); // Inside "variables.uss"
+      const importItem = USSParser.getImportAtPosition(mockDocument, position);
+
+      assert.ok(importItem);
+      assert.strictEqual(importItem.path, 'variables.uss');
+    });
+
+    test('Should resolve import paths correctly', () => {
+      const currentUri = vscode.Uri.file('/project/styles/main.uss');
+      
+      // Test relative path
+      const relativeResult = USSParser.resolveImportPath(currentUri, './variables.uss');
+      assert.ok(relativeResult);
+      assert.ok(relativeResult.path.includes('variables.uss'));
+      
+      // Test path without extension
+      const noExtResult = USSParser.resolveImportPath(currentUri, 'base');
+      assert.ok(noExtResult);
+      assert.ok(noExtResult.path.includes('base.uss'));
+    });
   });
 
   suite('USS Properties Data Tests', function () {

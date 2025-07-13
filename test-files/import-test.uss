@@ -1,0 +1,25 @@
+/* USS import test file */
+
+/* Test various @import statement formats */
+@import "variables-base.uss";
+@import 'components.uss';
+@import url("sample.uss");
+@import url('variable-validation-test.uss');
+
+/* Test relative path imports */
+@import "./sample.uss";
+@import "../test-files/components.uss";
+
+/* Test import without extension */
+@import "variables-base";
+
+/* Test classes using imported variables */
+.test-class {
+    color: var(--primary-color);
+    padding: 10px;
+}
+
+.another-test {
+    background-color: #f0f0f0;
+    margin: 5px;
+}

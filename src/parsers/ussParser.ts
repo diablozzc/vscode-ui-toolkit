@@ -30,6 +30,14 @@ export interface USSCustomProperty {
   range: vscode.Range;
 }
 
+export interface USSImport {
+  path: string;
+  url?: string;
+  position: vscode.Position;
+  range: vscode.Range;
+  pathRange: vscode.Range;
+}
+
 export class USSParser {
   
   /**
@@ -403,5 +411,98 @@ export class USSParser {
     }
     
     return diagnostics;
+  }
+
+  /**
+   * Parse @import statements from USS document
+   */
+  public static parseImports(document: vscode.TextDocument): USSImport[] {
+    const imports: USSImport[] = [];
+    const text = document.getText();
+    const lines = text.split('\n');
+    
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      const line = lines[lineIndex];
+      const trimmedLine = line.trim();
+      
+      // Skip comments
+      if (trimmedLine.startsWith('/*') || trimmedLine.startsWith('//')) {
+        continue;
+      }
+      
+      // Match @import statements
+      // Supports: @import "path"; @import 'path'; @import url("path"); @import url('path');
+      const importMatch = trimmedLine.match(/^@import\s+(?:url\s*\(\s*)?["']([^"']+)["']\s*\)?\s*;/);
+      if (importMatch) {
+        const fullMatch = importMatch[0];
+        const importPath = importMatch[1];
+        
+        const lineStart = line.indexOf('@import');
+        const pathStart = line.indexOf(importPath);
+        
+        const startPos = new vscode.Position(lineIndex, lineStart);
+        const endPos = new vscode.Position(lineIndex, lineStart + fullMatch.length);
+        const pathStartPos = new vscode.Position(lineIndex, pathStart);
+        const pathEndPos = new vscode.Position(lineIndex, pathStart + importPath.length);
+        
+        imports.push({
+          path: importPath,
+          url: importMatch[0].includes('url(') ? importPath : undefined,
+          position: startPos,
+          range: new vscode.Range(startPos, endPos),
+          pathRange: new vscode.Range(pathStartPos, pathEndPos)
+        });
+      }
+    }
+    
+    return imports;
+  }
+
+  /**
+   * Find import statement at specific position
+   */
+  public static getImportAtPosition(document: vscode.TextDocument, position: vscode.Position): USSImport | undefined {
+    const imports = this.parseImports(document);
+    
+    for (const importItem of imports) {
+      if (importItem.pathRange.contains(position)) {
+        return importItem;
+      }
+    }
+    
+    return undefined;
+  }
+
+  /**
+   * Resolve import path relative to current document
+   */
+  public static resolveImportPath(currentDocumentUri: vscode.Uri, importPath: string): vscode.Uri | undefined {
+    try {
+      // Handle relative paths
+      if (importPath.startsWith('./') || importPath.startsWith('../')) {
+        const currentDir = vscode.Uri.joinPath(currentDocumentUri, '..');
+        return vscode.Uri.joinPath(currentDir, importPath);
+      }
+      
+      // Handle absolute paths (starting with /)
+      if (importPath.startsWith('/')) {
+        const workspaceFolder = vscode.workspace.getWorkspaceFolder(currentDocumentUri);
+        if (workspaceFolder) {
+          return vscode.Uri.joinPath(workspaceFolder.uri, importPath.substring(1));
+        }
+      }
+      
+      // Handle paths without extension - try .uss extension
+      if (!importPath.includes('.')) {
+        const withExtension = importPath + '.uss';
+        return this.resolveImportPath(currentDocumentUri, withExtension);
+      }
+      
+      // Default: treat as relative to current document
+      const currentDir = vscode.Uri.joinPath(currentDocumentUri, '..');
+      return vscode.Uri.joinPath(currentDir, importPath);
+    } catch (error) {
+      return undefined;
+    }
   }
 }
