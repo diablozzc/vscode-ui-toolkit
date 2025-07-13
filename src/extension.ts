@@ -5,6 +5,7 @@ import { USSCrossFileDefinitionProvider } from './providers/ussDefinitionProvide
 import { USSHoverProvider } from './providers/ussHoverProvider';
 import { USSCompletionProvider } from './providers/ussCompletionProvider';
 import { UXMLCompletionProvider } from './providers/uxmlCompletionProvider';
+import { USSCodeActionProvider } from './providers/ussCodeActionProvider';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Unity UI Toolkit extension is now active!');
@@ -84,10 +85,22 @@ export function activate(context: vscode.ExtensionContext) {
         "'"
       )
     );
+
+    // Register USS code action provider for fixes
+    const ussCodeActionProvider = new USSCodeActionProvider();
+    context.subscriptions.push(
+      vscode.languages.registerCodeActionsProvider(
+        'uss',
+        ussCodeActionProvider,
+        {
+          providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
+        }
+      )
+    );
   }
 
   // Register commands
-  const disposable = vscode.commands.registerCommand(
+  const validateCommand = vscode.commands.registerCommand(
     'unityUIToolkit.validateUSS',
     () => {
       vscode.window.showInformationMessage(
@@ -95,7 +108,34 @@ export function activate(context: vscode.ExtensionContext) {
       );
     }
   );
-  context.subscriptions.push(disposable);
+  context.subscriptions.push(validateCommand);
+
+  // Register fix all USS issues command
+  const fixAllCommand = vscode.commands.registerCommand(
+    'unityUIToolkit.fixAllUSSIssues',
+    async () => {
+      const activeEditor = vscode.window.activeTextEditor;
+      if (!activeEditor || activeEditor.document.languageId !== 'uss') {
+        vscode.window.showErrorMessage('请在USS文件中使用此命令');
+        return;
+      }
+
+      const codeActionProvider = new USSCodeActionProvider();
+      const fixAllAction = codeActionProvider['createFixAllIssuesAction'](activeEditor.document);
+      
+      if (fixAllAction && fixAllAction.edit) {
+        const success = await vscode.workspace.applyEdit(fixAllAction.edit);
+        if (success) {
+          vscode.window.showInformationMessage('USS兼容性问题已修复');
+        } else {
+          vscode.window.showErrorMessage('修复失败');
+        }
+      } else {
+        vscode.window.showInformationMessage('未发现需要修复的USS兼容性问题');
+      }
+    }
+  );
+  context.subscriptions.push(fixAllCommand);
 
   // Watch for configuration changes
   context.subscriptions.push(

@@ -58,6 +58,22 @@
         "path": "./syntaxes/uss.tmLanguage.json"
       }
     ],
+    "commands": [
+      {
+        "command": "unityUIToolkit.fixAllUSSIssues",
+        "title": "修复所有USS兼容性问题",
+        "category": "Unity UI Toolkit"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "unityUIToolkit.fixAllUSSIssues",
+          "when": "resourceExtname == .uss",
+          "group": "1_modification@1"
+        }
+      ]
+    },
     "configuration": {
       "type": "object",
       "title": "Unity UI Toolkit",

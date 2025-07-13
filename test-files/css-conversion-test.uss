@@ -1,0 +1,36 @@
+/* Test file for CSS to USS conversion functionality */
+
+.test-class {
+  /* Properties that should be converted */
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  background: #ff0000;
+  border: 2px solid #000000;
+  transform: translate(10px, 20px);
+  
+  /* Properties that should be removed */
+  float: left;
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-decoration: underline;
+  line-height: 1.5;
+  animation: fadeIn 1s ease-in-out;
+  
+  /* Properties that are already USS compatible */
+  width: 100px;
+  height: 50px;
+  margin: 10px;
+  padding: 5px;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+.another-test {
+  /* Mix of convertible and removable properties */
+  text-align: left;
+  user-select: none;
+  font-family: Arial, sans-serif;
+  position: relative;
+  display: flex;
+}
